@@ -11,16 +11,20 @@ from api.page_parser import PageParser
 PORT = 8000
 
 async def handle(request):
-    name_prompt = request.match_info.get('name_prompt')
+    sentiment_base_url = "https://twitter.com"
+    name = request.match_info.get('name_prompt')
+    prompt = f'{name} {sentiment_base_url}'
     # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
-    query_generator = SearchResourceService().get_resource("AskReddit")
+    query_generator = SearchResourceService().get_resource("Google")
     page_html = '<br></br>'.join(
         await asyncio.gather(
-            get_page_text(query_generator.build_query(name_prompt))
+            get_page_text(query_generator.build_query(prompt))
         )
     )
     page_parser = PageParser(page_html)
-    return web.Response(text=page_html)
+    for result in page_parser.get_selector('span', {"class": "invisible"}):
+        print(result)
+    return web.Response(content_type="html", text=page_html)
 
 async def run_web_server():
     app = web.Application()
