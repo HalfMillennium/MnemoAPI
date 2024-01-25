@@ -16,7 +16,7 @@ class GoogleSearchResource(SearchResource):
         self.current_date = datetime.now().strftime("%m/%d/%Y")
 
         # ...earliest result will be {TIME_FRAME_DAYS} days ago
-        self.earliest_date = (datetime.now() - timedelta(days=self.time_frame_days)).strftime("%m/%d/%Y")
+        self.earliest_date = (datetime.now() - timedelta(days=time_frame_days)).strftime("%m/%d/%Y")
 
     def build_query(self, query):
         query = f'{self.BASE_URL}?q={query}&tbs=cdr:1,cd_min:{self.earliest_date},cd_max:{self.current_date}'

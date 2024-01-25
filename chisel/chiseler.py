@@ -1,13 +1,12 @@
 import grequests
 import asyncio
 
-
-async def get_page_text(url):
+async def fetch_page_text(url):
     # Create a list of URLs to request asynchronously
     urls = [url]
-
     # Use grequests.map to perform the asynchronous request
-    responses = grequests.map((grequests.get(u) for u in urls))
+    response = grequests.map((grequests.get(u) for u in urls))
+    return parse_response(response)
 
-    # Return the response
+def parse_response(responses):
     return responses[0].text if responses[0] else None
