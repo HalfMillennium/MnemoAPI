@@ -19,4 +19,8 @@ class PageParser:
 
     def get_markdown(self):
         return md(self.raw_html)
+    
+    def get_selector(self, selector, attr = None):
+        for selector in self.page_soup.find_all(selector, attr):
+            yield selector.getText()
         
