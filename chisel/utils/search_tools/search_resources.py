@@ -19,7 +19,9 @@ class GoogleSearchResource(SearchResource):
         self.earliest_date = (datetime.now() - timedelta(days=self.time_frame_days)).strftime("%m/%d/%Y")
 
     def build_query(self, query):
-        return f'{self.BASE_URL}?q={query}&tbs=cdr:1,cd_min:{self.earliest_date},cd_max:{self.current_date}'
+        query = f'{self.BASE_URL}?q={query}&tbs=cdr:1,cd_min:{self.earliest_date},cd_max:{self.current_date}'
+        print(f'Built query: {query}')
+        return query
         
     def get_name(self):
         return self.SOURCE_NAME

@@ -11,16 +11,11 @@ from api.page_parser import PageParser
 PORT = 8000
 
 async def handle(request):
-    sentiment_base_url = "https://twitter.com"
-    name = request.match_info.get('name_prompt')
-    prompt = f'{name} {sentiment_base_url}'
+    name_prompt = request.match_info.get('name_prompt')
     # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
-    query_generator = SearchResourceService().get_resource("Google")
-    page_html = '<br></br>'.join(
-        await asyncio.gather(
-            get_page_text(query_generator.build_query(prompt))
-        )
-    )
+    query_generator = SearchResourceService().get_resource("Google", 7)
+    gathered_results = await asyncio.gather(get_page_text(query_generator.build_query(name_prompt)))
+    page_html = gathered_results[0]
     page_parser = PageParser(page_html)
     for result in page_parser.get_selector('span', {"class": "invisible"}):
         print(result)
