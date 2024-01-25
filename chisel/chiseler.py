@@ -9,4 +9,6 @@ async def fetch_page_text(url):
     return parse_response(response)
 
 def parse_response(responses):
+    if responses == []:
+        return None
     return responses[0].text if responses[0] else None
