@@ -2,7 +2,7 @@ import sys
 sys.path.append('../')
 
 from search_resources import GoogleSearchResource, YahooSearchResource, AskRedditSearchResource
-from utils import get_prior_and_current_date
+from chisel.search_tools.utils import get_prior_and_current_date
 
 EXAMPLE_PROMPT = "hello_world"
 
