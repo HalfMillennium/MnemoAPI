@@ -18,7 +18,6 @@ async def handle(request):
     page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
     gathered_results = await asyncio.gather(page_text_request)
     page_html = gathered_results[0]
-     page_parser = PageParser(page_html)
 
     return web.Response(content_type="html", text=page_html)
 
