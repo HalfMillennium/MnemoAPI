@@ -14,13 +14,12 @@ from api.page_parser import PageParser
 async def handle(request):
     name_prompt = request.match_info.get('name_prompt')
     # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
-    query_generator = SearchResourceService().get_resource("Google", 2)
+    query_generator = SearchResourceService().get_resource("Google", 3)
     page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
     gathered_results = await asyncio.gather(page_text_request)
     page_html = gathered_results[0]
-    page_parser = PageParser(page_html)
-    for result in page_parser.get_selector('span', {"class": "invisible"}):
-        print(result)
+     page_parser = PageParser(page_html)
+
     return web.Response(content_type="html", text=page_html)
 
 async def run_web_server():
