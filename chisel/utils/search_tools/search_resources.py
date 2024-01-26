@@ -3,7 +3,7 @@ File containing all SearchResource classes
 '''
 from chisel.utils.search_tools.types.search_resource import SearchResource
 from datetime import datetime, timedelta
-from utils import get_prior_and_current_date
+from chisel.utils.search_tools.utils import get_prior_and_current_date
 
 class GoogleSearchResource(SearchResource):
     BASE_URL = "https://www.google.com/search"
