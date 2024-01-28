@@ -10,7 +10,15 @@ from aiohttp import web
 from chisel.chiseler import fetch_page_text
 from chisel.utils.search_tools.search_resource_service import SearchResourceService
 from api.page_parser import PageParser
+from fastapi import FastAPI
 
+app = FastAPI()
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+'''
 async def handle(request):
     name_prompt = request.match_info.get('name_prompt')
     # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
@@ -33,6 +41,7 @@ async def run_web_server():
     await site.start()
 
     print(f'OmniScope service running on port {PORT}.')
+'''
 
 if __name__ == "__main__":
     PORT = 8000 # local port for now
