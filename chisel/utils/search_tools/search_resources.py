@@ -5,8 +5,9 @@ from chisel.utils.search_tools.types.search_resource import SearchResource
 from datetime import datetime, timedelta
 from chisel.utils.search_tools.utils import get_prior_and_current_date
 
+# TODO: Update class name to reflect "Google News" intead of just "Google Search"
 class GoogleSearchResource(SearchResource):
-    BASE_URL = "https://www.google.com/search"
+    BASE_URL = "https://news.google.com/search"
     SOURCE_NAME = "Google Search"
 
     def __init__(self, time_frame_days = 7):

@@ -20,7 +20,7 @@ async def handle(request):
     page_html = gathered_results[0]
     parsed_page = PageParser(page_html)
     parsed_page.print_top_stories()
-    return web.Response(text=page_html)
+    return web.Response(content_type="html", text=page_html)
 
 async def run_web_server():
     app = web.Application()
