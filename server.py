@@ -1,40 +1,34 @@
 '''
-grequests performs necessary monkey-patching operations, and should be the first module imported
+'grequests' performs necessary monkey-patching operations on server start-up, and should be the first module imported
 '''
 import grequests
 import requests
 import json
 import asyncio
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from aiohttp import web
+import uvicorn
 from chisel.chiseler import fetch_page_text
 from chisel.utils.search_tools.search_resource_service import SearchResourceService
 from api.page_parser import PageParser
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
-async def handle(request):
-    name_prompt = request.match_info.get('name_prompt')
-    # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
-    query_generator = SearchResourceService().get_resource("Google", 3)
+app = FastAPI()
+
+PORT = 8000
+
+# The prompt entered by a user should be the name of a public figure
+@app.get("/thoughts/{name_prompt}")
+async def get_thoughts(name_prompt, response_class=HTMLResponse):
+    # TODO: Replace individual resource name and time_frame_days arguments to single 'ResourceSpec' object 
+    # that includes optional field 'time_frame_days' and required field 'resource_name'
+    query_generator = SearchResourceService("Google News", 3)
     page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
     gathered_results = await asyncio.gather(page_text_request)
+
+    # TODO: Parse more than just the first entry from gathered_results
     page_html = gathered_results[0]
-
-    return web.Response(content_type="html", text=page_html)
-
-async def run_web_server():
-    app = web.Application()
-    app.add_routes([web.get('/{name_prompt}', handle)])
-
-    runner = web.AppRunner(app)
-    await runner.setup()
-
-    site = web.TCPSite(runner, 'localhost', PORT)
-    await site.start()
-
-    print(f'OmniScope service running on port {PORT}.')
+    parsed_page = PageParser(page_html)
+    return HTMLResponse(content=page_html, status_code=200)
 
 if __name__ == "__main__":
-    PORT = 8000 # local port for now
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(run_web_server())
-    loop.run_forever()
+    uvicorn.run(app, host="127.0.0.1", port=PORT)
