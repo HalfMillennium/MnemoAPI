@@ -16,13 +16,16 @@ app = FastAPI()
 
 PORT = 8000
 
-# Theoretically the prompt entered by a user would be the name of a public figure
+# The prompt entered by a user should be the name of a public figure
 @app.get("/thoughts/{name_prompt}")
 async def get_thoughts(name_prompt, response_class=HTMLResponse):
-    # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
-    query_generator = SearchResourceService().get_resource("Google", 3)
+    # TODO: Replace individual resource name and time_frame_days arguments to single 'ResourceSpec' object 
+    # that includes optional field 'time_frame_days' and required field 'resource_name'
+    query_generator = SearchResourceService("Google News", 3)
     page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
     gathered_results = await asyncio.gather(page_text_request)
+
+    # TODO: Parse more than just the first entry from gathered_results
     page_html = gathered_results[0]
     parsed_page = PageParser(page_html)
     return HTMLResponse(content=page_html, status_code=200)
