@@ -16,7 +16,7 @@ app = FastAPI()
 
 PORT = 8000
 
-# Theoretically the prompt entered by a user would be the name of a public figure
+# The prompt entered by a user should be the name of a public figure
 @app.get("/thoughts/{name_prompt}")
 async def get_thoughts(name_prompt, response_class=HTMLResponse):
     # chisel result is a list, so in case it returns multiple items (for some reason), join them with a page break
