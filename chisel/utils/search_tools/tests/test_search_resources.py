@@ -17,3 +17,20 @@ def test_google_search_resource():
 
     google_search_resource = GoogleNewsSearchResource(4)
     assert google_search_resource.build_query(EXAMPLE_PROMPT) == expected_query
+
+def test_yahoo_search_resource():
+    BASE_URL = YahooSearchResource.BASE_URL
+
+    expected_query = f'{BASE_URL}?q={EXAMPLE_PROMPT}'
+
+    yahoo_search_resource = YahooSearchResource()
+    assert yahoo_search_resource.build_query(EXAMPLE_PROMPT) == expected_query
+
+def test_ask_reddit_search_resource():
+    BASE_URL = AskRedditSearchResource.BASE_URL
+
+    expected_query = f'{BASE_URL}?q={EXAMPLE_PROMPT}'
+
+    ask_reddit_search_resource = AskRedditSearchResource()
+    assert ask_reddit_search_resource.build_query(EXAMPLE_PROMPT) == expected_query
+
