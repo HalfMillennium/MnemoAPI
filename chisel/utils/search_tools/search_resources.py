@@ -20,6 +20,9 @@ class GoogleNewsSearchResource(SearchResource):
     def get_name(self):
         return self.SOURCE_NAME
 
+    def parse_page_stories(raw_html):
+        pass
+
 class YahooSearchResource(SearchResource):
     BASE_URL = "https://search.yahoo.com/search"
     SOURCE_NAME = "Yahoo Search"
