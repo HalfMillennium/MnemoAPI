@@ -8,7 +8,7 @@ import asyncio
 import uvicorn
 from chisel.chiseler import fetch_page_text
 from chisel.utils.search_tools.search_resource_service import SearchResourceService
-from api.page_parser import PageParser
+from chisel.page_parser.page_parser_service import PageParserService
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -25,10 +25,18 @@ async def get_thoughts(name_prompt, response_class=HTMLResponse):
     page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
     gathered_results = await asyncio.gather(page_text_request)
 
-    # TODO: Parse more than just the first entry from gathered_results
+    # TODO: Either parse more than just the first entry from gathered_results or do not return full array
     page_html = gathered_results[0]
-    parsed_page = PageParser(page_html)
-    return HTMLResponse(content=page_html, status_code=200)
+    __print_stories(page_html)
+
+    # Use `return HTMLResponse(content=page_html, status_code=200)` to return full styled HTML to frontend
+    return page_html
+
+def __print_stories(html_content):
+    google_news_page_parser = PageParserService("Google News", html_content)
+    articles = google_news_page_parser.get_stories()
+    for i, article in enumerate(articles, 1):
+        print(f'Article #{i}: {article}\n')
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=PORT)
