@@ -15,7 +15,7 @@ class GoogleNewsParser(PageParser):
     def __fetch_story_details(self, article_element):
         sub_contents = article_element
 
-        title_element = sub_contents.find('a', attrs={"data-n-tid": "29"})  # Assuming the title is within an anchor tag
+        title_element = sub_contents.find('a', attrs={"data-n-tid": "29"})
         title = title_element.text if title_element else None
         
         time_posted_element = sub_contents.find('time')  # Assuming the posted time is within a time tag
