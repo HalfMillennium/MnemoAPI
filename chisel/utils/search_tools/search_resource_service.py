@@ -1,11 +1,11 @@
 '''
 File containing SearchResourceService that manages search resources
 '''
-from chisel.utils.search_tools.search_resources import GoogleNewsSearchResource, YahooSearchResource, AskRedditSearchResource
+from chisel.utils.search_tools.search_resources import GoogleNewsSearchResource, YahooImagesSearchResource, AskRedditSearchResource
 
 class SearchResourceService:
     RESOURCES = {
-        "Yahoo": YahooSearchResource,
+        "Yahoo Images": YahooImagesSearchResource,
         "Google News": GoogleNewsSearchResource,
         "AskReddit": AskRedditSearchResource
         # TODO: Other resources necessary?
