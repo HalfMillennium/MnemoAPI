@@ -34,9 +34,9 @@ async def get_thoughts(name_prompt, response_class=HTMLResponse):
 
 def __print_stories(html_content):
     google_news_page_parser = PageParserService("Google News", html_content)
-    articles = google_news_page_parser.get_stories()
+    articles = google_news_page_parser.get_stories() # { title: string, source: string, date_posted: string }[]
     for i, article in enumerate(articles, 1):
-        print(f'Article #{i}: {article}\n')
+        print(f'{article["title"]}, posted {article["time_posted"]}\n')
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=PORT)

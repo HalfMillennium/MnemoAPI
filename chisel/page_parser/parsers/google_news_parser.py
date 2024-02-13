@@ -30,6 +30,8 @@ class GoogleNewsParser(PageParser):
         for p in self.page_soup.find_all('p'):
             yield p.get_text()
 
+    # TODO: Implement get_images_from_page(count):
+
     def get_stories(self):
         article_elements = self.page_soup.find_all('article')
 
