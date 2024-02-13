@@ -18,13 +18,13 @@ class GoogleNewsParser(PageParser):
         title_element = sub_contents.find('a', attrs={"data-n-tid": "29"})
         title = title_element.text if title_element else None
         
-        time_posted_element = sub_contents.find('time')  # Assuming the posted time is within a time tag
-        time_posted = time_posted_element.text if time_posted_element else ''
+        posted_time_ago_element = sub_contents.find('time')  # Assuming the posted time is within a time tag
+        posted_time_ago = posted_time_ago_element.text if posted_time_ago_element else ''
 
         source_element = sub_contents.find('div', attrs={"data-n-tid": "9"})
         source = source_element.text if source_element else None
         
-        return {'title': title, 'source': source, 'time_posted': time_posted}
+        return {'title': title, 'source': source, 'posted_time_ago': posted_time_ago}
 
     def get_paragraphs(self):
         for p in self.page_soup.find_all('p'):

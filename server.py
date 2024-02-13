@@ -36,7 +36,7 @@ def __print_stories(html_content):
     google_news_page_parser = PageParserService("Google News", html_content)
     articles = google_news_page_parser.get_stories() # { title: string, source: string, date_posted: string }[]
     for i, article in enumerate(articles, 1):
-        print(f'{article["title"]}, posted {article["time_posted"]}\n')
+        print(f'{article["title"]}, posted {article["posted_time_ago"]}\n')
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=PORT)
