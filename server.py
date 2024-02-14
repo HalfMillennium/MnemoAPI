@@ -16,9 +16,29 @@ app = FastAPI()
 
 PORT = 8000
 
-# The prompt entered by a user should be the name of a public figure
-@app.get("/thoughts/{name_prompt}")
-async def get_thoughts(name_prompt, response_class=JSONResponse):
+'''
+Return AI generated diary entry based on the current events related to the search term name_prompt
+'''
+@app.get("/diary_entry/{name_prompt}")
+async def get_diary_entry(name_prompt, response_class=HTMLResponse):
+    # TODO: Replace individual resource name and time_frame_days arguments to single 'ResourceSpec' object 
+    # that includes optional field 'time_frame_days' and required field 'resource_name'
+    query_generator = SearchResourceService("Yahoo Images")
+    page_text_request = fetch_page_text(query_generator.build_query(name_prompt))
+    gathered_results = await asyncio.gather(page_text_request)
+
+    # TODO: Either parse more than just the first entry from gathered_results or do not return full array from page_text_request
+    page_html = gathered_results[0]
+
+    # TODO: Instead of printing results, return as proper JSONResponse
+    __print_stories(page_html)
+    return HTMLResponse(content=page_html, status_code=200)
+
+'''
+Returns a set of relevant images related to the search term name_prompt
+'''
+@app.get("/images/{name_prompt}")
+async def get_images(name_prompt, response_class=JSONResponse):
     # TODO: Replace individual resource name and time_frame_days arguments to single 'ResourceSpec' object 
     # that includes optional field 'time_frame_days' and required field 'resource_name'
     query_generator = SearchResourceService("Yahoo Images")
