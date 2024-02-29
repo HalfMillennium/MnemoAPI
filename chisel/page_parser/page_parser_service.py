@@ -1,8 +1,10 @@
 from .parsers.google_news_parser import GoogleNewsParser
+from .parsers.yahoo_images_parser import YahooImagesParser
 
 class PageParserService:
     PARSERS = {
-        "Google News": GoogleNewsParser
+        "Google News": GoogleNewsParser,
+        "Yahoo Images": YahooImagesParser
         # Create and add others
     }
 
@@ -16,4 +18,9 @@ class PageParserService:
 
     def get_stories(self):
         return self.parser.get_stories()
+
+    def get_images(self, alt = None):
+        if(self.resource != "Yahoo Images"):
+            raise Exception(f'{self.resource} does not implement \'get_images()\' method.')
+        return self.parser.get_images(alt)
     

@@ -23,12 +23,12 @@ class GoogleNewsSearchResource(SearchResource):
     def parse_page_stories(raw_html):
         pass
 
-class YahooSearchResource(SearchResource):
-    BASE_URL = "https://search.yahoo.com/search"
-    SOURCE_NAME = "Yahoo Search"
+class YahooImagesSearchResource(SearchResource):
+    BASE_URL = "https://images.search.yahoo.com/search/images"
+    SOURCE_NAME = "Yahoo Images Search"
 
     def build_query(self, prompt):
-        query = f'{self.BASE_URL}?q={prompt}'
+        query = f'{self.BASE_URL};?p={prompt}'
         print(f'BUILT [{self.SOURCE_NAME}] QUERY: "{query}"')
         return query
         

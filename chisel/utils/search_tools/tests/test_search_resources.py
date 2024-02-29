@@ -1,4 +1,4 @@
-from ..search_resources import GoogleNewsSearchResource, YahooSearchResource, AskRedditSearchResource
+from ..search_resources import GoogleNewsSearchResource, YahooImagesSearchResource, AskRedditSearchResource
 from ..utils import get_prior_and_current_date
 
 EXAMPLE_PROMPT = "hello_world"
@@ -18,12 +18,12 @@ def test_google_search_resource():
     google_search_resource = GoogleNewsSearchResource(4)
     assert google_search_resource.build_query(EXAMPLE_PROMPT) == expected_query
 
-def test_yahoo_search_resource():
-    BASE_URL = YahooSearchResource.BASE_URL
+def test_yahoo_images_search_resource():
+    BASE_URL = YahooImagesSearchResource.BASE_URL
 
-    expected_query = f'{BASE_URL}?q={EXAMPLE_PROMPT}'
+    expected_query = f'{BASE_URL};?p={EXAMPLE_PROMPT}'
 
-    yahoo_search_resource = YahooSearchResource()
+    yahoo_search_resource = YahooImagesSearchResource()
     assert yahoo_search_resource.build_query(EXAMPLE_PROMPT) == expected_query
 
 def test_ask_reddit_search_resource():
