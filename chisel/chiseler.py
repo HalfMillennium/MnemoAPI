@@ -1,7 +1,7 @@
 import grequests
 import asyncio
 
-async def fetch_page_text(url):
+async def fetch_page_content(url):
     # Create a list of URLs to request asynchronously
     urls = [url]
     # Use grequests.map to perform the asynchronous request
