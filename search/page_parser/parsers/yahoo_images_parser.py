@@ -10,7 +10,8 @@ class YahooImagesParser(PageParser):
         self.raw_html = raw_html
 
     def __make_soup(self, raw_html):
-        return BeautifulSoup(raw_html, 'html.parser')
+        return BeautifulSoup(str(raw_html), 'html.parser')
+        #print(f'print {type(raw_html)}')
 
     def get_images(self, alt = None):
         for img in self.page_soup.find_all('img'):

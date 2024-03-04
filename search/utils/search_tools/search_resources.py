@@ -3,6 +3,7 @@ File containing all SearchResource classes
 '''
 from datetime import datetime, timedelta
 from ...utils.search_tools.types.search_resource import SearchResource
+from ...page_parser.page_parser_service import PageParserService
 from .utils import get_prior_and_current_date
 
 class GoogleNewsSearchResource(SearchResource):
@@ -34,6 +35,7 @@ class YahooImagesSearchResource(SearchResource):
         
     def get_name(self):
         return self.SOURCE_NAME
+
 
 class AskRedditSearchResource(SearchResource):
     BASE_URL = "https://www.reddit.com/r/AskReddit/search"
