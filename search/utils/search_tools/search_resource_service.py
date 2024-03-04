@@ -37,9 +37,9 @@ class SearchResourceService:
         response = grequests.map((grequests.get(u) for u in urls))
         return self.parse_response(response)
 
-    async def fetch_and_parse_images(self, search_term, alt = None):
+    async def fetch_and_parse_images(self, search_term, alt = None, resource_name = "Yahoo Images"):
         page_html = await self.execute_query(search_term)
-        yahoo_images_parser = PageParserService(self.resource_name, page_html)
+        yahoo_images_parser = PageParserService(resource_name, page_html)
         images = yahoo_images_parser.get_images(alt) # { src: string, alt: string | None }[]
         return images
 
