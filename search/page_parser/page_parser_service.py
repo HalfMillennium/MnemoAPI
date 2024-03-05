@@ -12,11 +12,10 @@ class PageParserService:
         self.resource = resource
         self.raw_html = raw_html
         self.parser = self.PARSERS.get(self.resource)(self.raw_html)
-    
-    def get_paragraphs(self):
-        return self.parser.get_paragraph_tags(self.raw_html)
 
     def get_stories(self):
+        if(self.resource != "Google News"):
+            raise Exception(f'{self.resource} does not implement \'get_stories()\' method.')
         return self.parser.get_stories()
 
     def get_images(self, alt = None):

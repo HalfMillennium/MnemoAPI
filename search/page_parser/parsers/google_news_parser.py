@@ -2,9 +2,8 @@
 Parsing library for Google News search results
 '''
 from bs4 import BeautifulSoup
-from ...utils.search_tools.types.page_parser import PageParser
 
-class GoogleNewsParser(PageParser):
+class GoogleNewsParser:
     def __init__(self, raw_html):
         self.page_soup = self.__make_soup(raw_html)
         self.raw_html = raw_html
@@ -18,19 +17,13 @@ class GoogleNewsParser(PageParser):
         title_element = sub_contents.find('a', attrs={"data-n-tid": "29"})
         title = title_element.text if title_element else None
         
-        posted_time_ago_element = sub_contents.find('time')  # Assuming the posted time is within a time tag
+        posted_time_ago_element = sub_contents.find('time')  # Assuming the posted time is always within a time tag
         posted_time_ago = posted_time_ago_element.text if posted_time_ago_element else ''
 
         source_element = sub_contents.find('div', attrs={"data-n-tid": "9"})
         source = source_element.text if source_element else None
         
         return {'title': title, 'source': source, 'posted_time_ago': posted_time_ago}
-
-    def get_paragraphs(self):
-        for p in self.page_soup.find_all('p'):
-            yield p.get_text()
-
-    # TODO: Implement get_images_from_page(count):
 
     def get_stories(self):
         article_elements = self.page_soup.find_all('article')

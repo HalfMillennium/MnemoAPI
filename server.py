@@ -24,8 +24,12 @@ async def get_diary_entry(name_prompt, response_class=HTMLResponse):
     # that includes optional field 'time_frame_days' and required field 'resource_name'
     google_news_search = SearchResourceService("Google News")
     page_html = await google_news_search.execute_query(name_prompt)
-
-    return HTMLResponse(content=page_html, status_code=200)
+    google_news_page_parser = PageParserService("Google News", page_html)
+    parsed_stories = list(google_news_page_parser.get_stories())
+    status = 200
+    if(parsed_stories == []:)
+        status = 404
+    return JSONResponse(content=parsed_stories, status_code=status)
 
 '''
 Returns a set of relevant images related to the search term name_prompt
@@ -33,9 +37,13 @@ Returns a set of relevant images related to the search term name_prompt
 @app.get("/images/{name_prompt}")
 async def get_images(name_prompt, response_class=JSONResponse):
     yahoo_images_search = SearchResourceService("Yahoo Images")
-    images = await asyncio.gather(yahoo_images_search.fetch_and_parse_images(name_prompt))
+    images = await yahoo_images_search.fetch_and_parse_images(name_prompt)
+    images_list = list(images)
+    status = 200
+    if(images_list == []):
+        status = 404
     
-    return JSONResponse(content=list(images[0]), status_code=200)
+    return JSONResponse(content=images_list, status_code=status)
 
 def print_google_news_stories(html_content):
     google_news_page_parser = PageParserService("Google News", html_content)

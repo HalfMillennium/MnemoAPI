@@ -5,6 +5,7 @@ import grequests
 import asyncio
 from search.utils.search_tools.search_resources import GoogleNewsSearchResource, YahooImagesSearchResource, AskRedditSearchResource
 from ...page_parser.page_parser_service import PageParserService
+
 class SearchResourceService:
     RESOURCES = {
         "Yahoo Images": YahooImagesSearchResource,
@@ -22,7 +23,7 @@ class SearchResourceService:
         else:
             self.current_resource = self.RESOURCES.get(self.resource_name)()
 
-    def build_query(self, prompt, time_frame_days = 7) -> str:
+    def build_query(self, prompt) -> str:
         return self.current_resource.build_query(prompt)
 
     async def execute_query(self, search_term) -> str:

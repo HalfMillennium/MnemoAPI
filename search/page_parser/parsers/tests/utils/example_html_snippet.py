@@ -1,4 +1,7 @@
 class ExampleHtmlSnippet:
+    '''
+    Article tags are used to fetch story content from Google News results
+    '''
     article_tag = """
         <article class="IFHyqb\" jscontroller="BoFkO\" jsmodel="hT8rr\" jsaction="rcuQ6b:npT2md;\" jsdata=\
             "oM6qxc;CBMieWh0dHBzOi8vcGFnZXNpeC5jb20vMjAyNC8wMi8xMC9lbnRlcnRhaW5tZW50L3RheWxvci1zd2lmdC1hbmQtdHJhdmlzLWtlbGNlcy1mYW1pbGllcy10by1zaXQtaW4tc3VwZXItYm93bC1zdWl0ZS10b2dldGhlci_SAX1odHRwczovL3BhZ2VzaXguY29tLzIwMjQvMDIvMTAvZW50ZXJ0YWlubWVudC90YXlsb3Itc3dpZnQtYW5kLXRyYXZpcy1rZWxjZXMtZmFtaWxpZXMtdG8tc2l0LWluLXN1cGVyLWJvd2wtc3VpdGUtdG9nZXRoZXIvYW1wLw;4\" jslog=\
@@ -41,4 +44,26 @@ class ExampleHtmlSnippet:
                 <div class="bInasb\"><span aria-hidden="true\">Tamantha Ryan</span><span class="PJK1m\">By Tamantha Ryan</span></div>
             </div>
         </article>
+    """
+
+    '''
+    Represents example results returned from Yahoo Images
+    '''
+    images_html = """
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            </head>
+            <body>
+                <script src="index.js"></script>
+                <img alt="john malkovich Kids" class="rs-in-img" src="https://s.yimg.com/fz/api/res/1.2/_RxOK6.QSs2yYSjmERVvSA--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD04ODt3PTg4/https://tse3.mm.bing.net/th?q=John+Malkovich+Kids&amp;pid=Api&amp;mkt=en-US&amp;cc=US&amp;setlang=en&amp;adlt=strict&amp;t=1"/>
+                <img alt="" class="rs-in-img" src="NOT INCLUDED"/>
+                <img alt="Glenne Headly john malkovich" class="rs-in-img" src="https://s.yimg.com/fz/api/res/1.2/HtwfdYZ14d4h9msiMDkSbw--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD04ODt3PTg4/https://tse2.mm.bing.net/th?q=Glenne+Headly+John+Malkovich&amp;pid=Api&amp;mkt=en-US&amp;cc=US&amp;setlang=en&amp;adlt=strict&amp;t=1"/>
+                <img alt="john malkovich Johnny English" class="rs-in-img" src="https://s.yimg.com/fz/api/res/1.2/lVuSJu7JYcBdEidFIVALXQ--~C/YXBwaWQ9c3JjaGRkO2ZpPWZpbGw7aD04ODt3PTg4/https://tse4.mm.bing.net/th?q=John+Malkovich+Johnny+English&amp;pid=Api&amp;mkt=en-US&amp;cc=US&amp;setlang=en&amp;adlt=strict&amp;t=1"/>
+                <img alt="" class="rs-in-img" src="NOT INCLUDED"/>
+            </body>
+        </html>
     """
