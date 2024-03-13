@@ -10,6 +10,7 @@ from search.utils.search_tools.search_resource_service import SearchResourceServ
 from search.page_parser.page_parser_service import PageParserService
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
+from gpt_api.service import GptService
 
 app = FastAPI()
 
@@ -26,10 +27,14 @@ async def get_diary_entry(name_prompt, response_class=HTMLResponse):
     page_html = await google_news_search.execute_query(name_prompt)
     google_news_page_parser = PageParserService("Google News", page_html)
     parsed_stories = list(google_news_page_parser.get_stories())
+    if(parsed_stories == []):
+        return JSONResponse(content=f'Couldn\'t any stories related to "{name_prompt}".', status_code=404)
     status = 200
-    if(parsed_stories == []:)
-        status = 404
-    return JSONResponse(content=parsed_stories, status_code=status)
+    gpt_service = GptService()
+    diary_entry_response = gpt_service.generate_diary_entry(parsed_stories, name_prompt)
+    if(not diary_entry_response):
+        status = 500
+    return JSONResponse(content=diary_entry_response, status_code=status)
 
 '''
 Returns a set of relevant images related to the search term name_prompt
