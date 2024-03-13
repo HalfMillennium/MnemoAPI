@@ -10,12 +10,12 @@ class GptService:
         self.OPEN_AI_KEY = os.getenv('OPEN_AI_KEY')
         openai.api_key = self.OPEN_AI_KEY
     
-    def generate_diary_entry(self, stories, name_prompt):
-        full_prompt = self.__build_full_diary_prompt(stories, name_prompt, DEFAULT_WORD_COUNT)
+    def generate_diary_entry(self, stories, name_prompt, word_count = DEFAULT_WORD_COUNT) -> str:
+        full_prompt = self.__build_full_diary_prompt(stories, name_prompt, word_count)
         response = self.get_response(full_prompt)
         return response
         
-    def get_response(self, prompt) -> str:
+    def get_response(self, prompt):
         messages = []
         if prompt: 
             messages.append( 
