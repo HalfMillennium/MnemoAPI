@@ -10,11 +10,8 @@ class GoogleNewsSearchResource(SearchResource):
     BASE_URL = "https://news.google.com/search"
     SOURCE_NAME = "Google News Search"
 
-    def __init__(self, time_frame_days = 7):
-        (self.earliest_date, self.current_date) = get_prior_and_current_date(time_frame_days)
-
     def build_query(self, prompt):
-        query = f'{self.BASE_URL}?q={prompt}&tbs=cdr:1,cd_min:{self.earliest_date},cd_max:{self.current_date}'
+        query = f'{self.BASE_URL}?q={prompt}'
         print(f'BUILT [{self.SOURCE_NAME}] QUERY: "{query}"')
         return query
         
